@@ -1,8 +1,11 @@
+const LoginPage = require ('./../po/pages/login.page.js');
 const { users, clearInput } = require('../utils/dataProvider.js');
+
+const loginPage = new LoginPage();
 
 describe('Login functionality', () => {
     beforeEach(async () => {
-        await browser.url('https://www.saucedemo.com/');
+        await loginPage.open();
     });
 
     it('UC-1: should show error if fields are empty', async () => {
