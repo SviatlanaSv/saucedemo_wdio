@@ -1,4 +1,4 @@
-const LoginPage = require ('./../po/pages/login.page.js');
+const LoginPage = require ('../po/pages/login.page.js');
 const {users} = require('../utils/dataProvider.js');
 
 const loginPage = new LoginPage();
