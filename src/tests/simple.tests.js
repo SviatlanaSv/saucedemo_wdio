@@ -1,5 +1,5 @@
 const LoginPage = require ('./../po/pages/login.page.js');
-const { users, clearInput } = require('../utils/dataProvider.js');
+const {users} = require('../utils/dataProvider.js');
 
 const loginPage = new LoginPage();
 
@@ -9,28 +9,29 @@ describe('Login functionality', () => {
     });
 
     it('UC-1: should show error if fields are empty', async () => {
-        await $('#user-name').setValue(users.invalid.username);
-        await $('#password').setValue(users.invalid.password);
 
-        await clearInput('#user-name');
-        await clearInput('#password');
+        await loginPage.username.setValue(users.invalid.username);
+        await loginPage.password.setValue(users.invalid.password);
 
-        console.log('Username field after manual backspace should be empty:', await $('#user-name').getValue());
-        console.log('Password field after manual backspace should be empty:', await $('#password').getValue());
+        await loginPage.username.clearValue();
+        await loginPage.password.clearValue();
 
-        await $('#login-button').click();
+        console.log('Username field after clear should be empty:', await loginPage.username.getValue());
+        console.log('Password field after clear should be empty:', await loginPage.password.getValue());
 
-        await expect($('h3[data-test="error"]')).toBeDisplayed();
-        await expect($('h3[data-test="error"]')).toHaveText(
-            expect.stringContaining('Username is required')
-        );
+        await loginPage.loginBtn.click();
+    
+        await expect(loginPage.errorMsg).toBeDisplayed();
+        await expect(loginPage.errorMsg).toHaveText(expect.stringContaining('Username is required'));
     });
+
 
     it('UC-2: should show error if password is missing (valid user)', async () => {
         await $('#user-name').setValue(users.valid.username);
         await $('#password').setValue(users.valid.password);
 
-        await clearInput('#password');
+        // await clearInput('#password');
+        await loginPage.password.clearValue();
 
         console.log('Password field after manual backspace should be empty:', await $('#password').getValue());
 
