@@ -38,14 +38,15 @@ describe('Login functionality', () => {
         await expect(loginPage.errorMsg).toBeDisplayed();
         await expect(loginPage.errorMsg).toHaveText(expect.stringContaining('Password is required'));
     });
-    
+
 
     it('UC-3: should log in with valid username and password and see "Swag Labs"', async () => {
-        await $('#user-name').setValue(users.valid.username);
-        await $('#password').setValue(users.valid.password);
-        await $('#login-button').click();
+        await loginPage.username.setValue(users.valid.username);
+        await loginPage.password.setValue(users.valid.password);
 
-        await expect($('.app_logo')).toBeDisplayed();
-        await expect($('.app_logo')).toHaveText('Swag Labs');
+        await loginPage.loginBtn.click();
+
+        await expect(loginPage.logo).toBeDisplayed();
+        await expect(loginPage.logo).toHaveText('Swag Labs');
     });
 });
